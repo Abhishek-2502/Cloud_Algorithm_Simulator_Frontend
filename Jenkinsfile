@@ -5,7 +5,7 @@ pipeline {
         DOCKER_IMAGE = 'flask-cloudsim-app'
         DOCKER_TAG = 'latest'
         CONTAINER_NAME = 'flask-cloudsim-container'
-        SSH_CREDENTIALS_ID = 'cloudsim-frontend-slave'
+        SSH_CREDENTIALS_ID = 'cloudsim-frontend-slave' // Ensure this matches your Jenkins credential ID
     }
 
     stages {
@@ -15,9 +15,9 @@ pipeline {
                     echo 'Checking out code using SSH...'
                     checkout([
                         $class: 'GitSCM',
-                        branches: [[name: '*/main']],
+                        branches: [[name: 'main']],
                         userRemoteConfigs: [[
-                            url: 'git@github.com:Abhishek-2502/Cloud_Algorithm_Simulator_Frontend.git', // SSH URL
+                            url: 'git@github.com:Abhishek-2502/Cloud_Algorithm_Simulator_Frontend.git',
                             credentialsId: "${SSH_CREDENTIALS_ID}"
                         ]]
                     ])
@@ -27,7 +27,6 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                echo 'Building Docker Image...'
                 sh "docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} ."
             }
         }
@@ -35,7 +34,6 @@ pipeline {
         stage('Stop and Remove Existing Container') {
             steps {
                 script {
-                    echo 'Stopping and removing any existing container with the same name...'
                     sh "docker ps -a -q --filter 'name=${CONTAINER_NAME}' | xargs -r docker stop"
                     sh "docker ps -a -q --filter 'name=${CONTAINER_NAME}' | xargs -r docker rm"
                 }
@@ -44,7 +42,6 @@ pipeline {
 
         stage('Run Docker Container') {
             steps {
-                echo 'Running new Docker container...'
                 sh "docker run -d -p 5000:5000 --name ${CONTAINER_NAME} ${DOCKER_IMAGE}:${DOCKER_TAG}"
             }
         }
