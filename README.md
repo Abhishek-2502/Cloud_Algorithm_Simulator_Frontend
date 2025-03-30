@@ -8,12 +8,9 @@
 3. [Project Structure](#project-structure)  
 4. [Supported Algorithms](#supported-cloud-scheduling-algorithms)  
 5. [Installation & Setup](#installation--setup)  
-6. [Usage](#usage)  
-7. [Microservices Architecture](#microservices-architecture)  
-8. [CI/CD Pipeline & Deployment](#cicd-pipeline--deployment)  
-9. [Contributing](#contributing)  
-10. [Authors](#authors)  
-11. [License](#license)  
+6. [Microservices Architecture](#microservices-architecture)  
+7. [Authors](#authors)  
+8. [License](#license)  
 
 ---
 
@@ -125,16 +122,6 @@ Access the frontend at **`http://localhost:5000`**.
 
 ---
 
-## 🔥 Usage
-
-1. Open the **deployed EC2 link** in your web browser.  
-2. Select a **cloud scheduling algorithm** from the available options and configure other parameters.  
-3. Click **"Simulate"** to send the request to backend microservices for execution.  
-4. View and analyze the **execution results and performance metrics**.  
-5. Experiment with different algorithms to compare efficiencies.  
-
----
-
 ## 🏗️ Microservices Architecture
 
 The **Cloud Algorithm Simulator** follows a **microservices-based design**, ensuring modularity and scalability:
@@ -153,41 +140,6 @@ The **Cloud Algorithm Simulator** follows a **microservices-based design**, ensu
   - Results are returned to Flask for visualization.  
 
 This architecture enhances **scalability, fault tolerance, and maintainability**.  
-
----
-
-## 🔄 CI/CD Pipeline & Deployment
-
-- **Automated Builds & Deployments:** Implemented using **Jenkins Master-Slave Architecture** for continuous integration and deployment.  
-- **Hosting:** The frontend and backend microservices are **deployed on AWS EC2**.  
-- **Containerization:** Dockerized services ensure consistency across environments.  
-
----
-
-## 🤝 Contributing
-
-We welcome contributions to enhance the **Cloud Algorithm Simulator - Frontend**! To contribute:
-
-1. **Fork the repository**.  
-2. **Create a new branch**:  
-
-   ```bash
-   git checkout -b feature/YourFeature
-   ```
-
-3. **Make your changes and commit them**:  
-
-   ```bash
-   git commit -m "Add YourFeature"
-   ```
-
-4. **Push to your branch**:  
-
-   ```bash
-   git push origin feature/YourFeature
-   ```
-
-5. **Open a Pull Request**.  
 
 ---
 
