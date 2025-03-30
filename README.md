@@ -14,7 +14,7 @@
 
 ---
 
-## ✨ Features
+## Features
 
 - **Microservices-Based Cloud Algorithm Simulation** – The frontend (Flask) interacts with backend microservices (Spring Boot) for cloud scheduling.  
 - **Real-Time Execution & Results** – Immediate feedback on scheduling performance.  
@@ -25,7 +25,7 @@
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Frontend:** Python (Flask), HTML, CSS, JavaScript  
 - **Backend:** Spring Boot (Microservices)  
@@ -37,7 +37,7 @@
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```plaintext
 Cloud_Algorithm_Simulator_Frontend/
@@ -56,7 +56,7 @@ Cloud_Algorithm_Simulator_Frontend/
 
 ---
 
-## ⚡ Supported Cloud Scheduling Algorithms
+## Supported Cloud Scheduling Algorithms
 
 This simulator supports the following **cloud scheduling and resource allocation algorithms**, processed via backend microservices:
 
@@ -68,7 +68,7 @@ This simulator supports the following **cloud scheduling and resource allocation
 
 ---
 
-## 🚀 Installation & Setup
+## Installation & Setup
 
 You can run the application **manually** or using **Docker**.
 
@@ -122,7 +122,7 @@ Access the frontend at **`http://localhost:5000`**.
 
 ---
 
-## 🏗️ Microservices Architecture
+## Microservices Architecture
 
 The **Cloud Algorithm Simulator** follows a **microservices-based design**, ensuring modularity and scalability:
 
@@ -143,12 +143,12 @@ This architecture enhances **scalability, fault tolerance, and maintainability**
 
 ---
 
-## 👨‍💻 Authors
+## Authors
 
 - **Abhishek Rajput** - [GitHub](https://github.com/Abhishek-2502)  
 
 ---
 
-## 📜 License
+## License
 
 This project is licensed under the **MIT License**.  
