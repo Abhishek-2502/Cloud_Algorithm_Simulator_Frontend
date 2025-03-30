@@ -5,7 +5,7 @@ pipeline {
         DOCKER_IMAGE = 'flask-cloudsim-app'
         DOCKER_TAG = 'latest'
         CONTAINER_NAME = 'flask-cloudsim-container'
-        SSH_CREDENTIALS_ID = 'cloudsim-frontend-slave' // Ensure this matches your Jenkins credential ID
+        SSH_CREDENTIALS_ID = 'cloudsim-frontend-slave' // This should match Jenkins credentials ID
     }
 
     stages {
