@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'cloudsimFrontend' } // Ensure it runs on your slave node
+    agent { label 'cloudsimFrontend' }
 
     environment {
         DOCKER_IMAGE = 'flask-cloudsim-app'
@@ -10,38 +10,26 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                script {
-                    echo 'Checking out the source code...'
-                    checkout scm
-                }
+                checkout scm
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                script {
-                    echo 'Building Docker image...'
-                    sh "docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} ."
-                }
+                sh "docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} ."
             }
         }
 
-        stage('Stop Existing Container') {
+        stage('Stop Existing Container on Port 5000') {
             steps {
-                script {
-                    echo 'Stopping and removing existing container if exists...'
-                    sh "docker stop ${CONTAINER_NAME} || true"
-                    sh "docker rm ${CONTAINER_NAME} || true"
-                }
+                sh "docker ps -q --filter 'publish=5000' | xargs -r docker stop"
+                sh "docker ps -a -q --filter 'publish=5000' | xargs -r docker rm"
             }
         }
 
         stage('Run Docker Container') {
             steps {
-                script {
-                    echo 'Running Docker container...'
-                    sh "docker run -d -p 5000:5000 --name ${CONTAINER_NAME} ${DOCKER_IMAGE}:${DOCKER_TAG}"
-                }
+                sh "docker run -d -p 5000:5000 --name ${CONTAINER_NAME} ${DOCKER_IMAGE}:${DOCKER_TAG}"
             }
         }
     }
