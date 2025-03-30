@@ -6,9 +6,9 @@
 1. [Features](#features)  
 2. [Tech Stack](#tech-stack)  
 3. [Project Structure](#project-structure)  
-4. [Supported Algorithms](#supported-cloud-scheduling-algorithms)  
-5. [Installation & Setup](#installation--setup)  
-6. [Microservices Architecture](#microservices-architecture)  
+4. [Supported Algorithms](#supported-cloud-scheduling-algorithms)
+5. [Microservices Architecture](#microservices-architecture)  
+6. [Installation & Setup](#installation--setup)  
 7. [Authors](#authors)  
 8. [License](#license)  
 
@@ -68,6 +68,27 @@ This simulator supports the following **cloud scheduling and resource allocation
 
 ---
 
+## Microservices Architecture
+
+The **Cloud Algorithm Simulator** follows a **microservices-based design**, ensuring modularity and scalability:
+
+- **Frontend:**  
+  - Developed in **Flask** for UI rendering and user interactions.  
+  - Sends API requests to backend microservices for execution.  
+
+- **Backend (Microservices):**  
+  - **Spring Boot** services handle cloud scheduling logic.  
+  - Each scheduling algorithm runs in an isolated microservice.  
+  - **RESTful APIs** allow communication between frontend and backend.  
+
+- **CloudSim Integration:**  
+  - Backend microservices process tasks using CloudSim.  
+  - Results are returned to Flask for visualization.  
+
+This architecture enhances **scalability, fault tolerance, and maintainability**.  
+
+---
+
 ## Installation & Setup
 
 You can run the application **manually** or using **Docker**.
@@ -119,27 +140,6 @@ docker run -d -p 5000:5000 cloudsim-frontend
 ```
 
 Access the frontend at **`http://localhost:5000`**.
-
----
-
-## Microservices Architecture
-
-The **Cloud Algorithm Simulator** follows a **microservices-based design**, ensuring modularity and scalability:
-
-- **Frontend:**  
-  - Developed in **Flask** for UI rendering and user interactions.  
-  - Sends API requests to backend microservices for execution.  
-
-- **Backend (Microservices):**  
-  - **Spring Boot** services handle cloud scheduling logic.  
-  - Each scheduling algorithm runs in an isolated microservice.  
-  - **RESTful APIs** allow communication between frontend and backend.  
-
-- **CloudSim Integration:**  
-  - Backend microservices process tasks using CloudSim.  
-  - Results are returned to Flask for visualization.  
-
-This architecture enhances **scalability, fault tolerance, and maintainability**.  
 
 ---
 
