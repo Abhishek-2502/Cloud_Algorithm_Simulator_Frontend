@@ -5,19 +5,19 @@ pipeline {
         DOCKER_IMAGE = 'flask-cloudsim-app'
         DOCKER_TAG = 'latest'
         CONTAINER_NAME = 'flask-cloudsim-container'
-        SSH_CREDENTIALS_ID = 'cloudsim-frontend-slave' // Use the ID of the SSH credential
+        SSH_CREDENTIALS_ID = 'cloudsim-frontend-slave'
     }
 
     stages {
         stage('Checkout') {
             steps {
                 script {
-                    echo 'Checking out code using SSH with private repo access...'
+                    echo 'Checking out code using SSH...'
                     checkout([
                         $class: 'GitSCM',
                         branches: [[name: '*/main']],
                         userRemoteConfigs: [[
-                            url: 'git@github.com:YourUsername/YourPrivateRepo.git', // Use SSH URL
+                            url: 'git@github.com:Abhishek-2502/Cloud_Algorithm_Simulator_Frontend.git', // SSH URL
                             credentialsId: "${SSH_CREDENTIALS_ID}"
                         ]]
                     ])
