@@ -20,15 +20,19 @@ pipeline {
             }
         }
 
-        stage('Stop Existing Container on Port 5000') {
+        stage('Stop and Remove Existing Container') {
             steps {
-                sh "docker ps -q --filter 'publish=5000' | xargs -r docker stop"
-                sh "docker ps -a -q --filter 'publish=5000' | xargs -r docker rm"
+                script {
+                    echo 'Stopping and removing any existing container with the same name...'
+                    sh "docker ps -a -q --filter 'name=${CONTAINER_NAME}' | xargs -r docker stop"
+                    sh "docker ps -a -q --filter 'name=${CONTAINER_NAME}' | xargs -r docker rm"
+                }
             }
         }
 
         stage('Run Docker Container') {
             steps {
+                echo 'Running new Docker container...'
                 sh "docker run -d -p 5000:5000 --name ${CONTAINER_NAME} ${DOCKER_IMAGE}:${DOCKER_TAG}"
             }
         }
