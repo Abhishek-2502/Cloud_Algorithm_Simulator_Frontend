@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CloudSim Simulation</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+</head>
+
+<body class="container py-5">
+  <h1 class="mb-4">CloudSim Simulation Input</h1>
+  
+  <!-- Simulation Form -->
+  <form action="/simulate" method="post" id="simulationForm">
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <label for="numVMs" class="form-label">Number of VMs:</label>
+        <input type="number" name="numVMs" class="form-control" id="numVMs" min="1" required />
+      </div>
+
+      <div class="col-md-4">
+        <label for="numCloudlets" class="form-label">Number of Cloudlets:</label>
+        <input type="number" name="numCloudlets" class="form-control" id="numCloudlets" min="1" required />
+      </div>
+
+      <div class="col-md-4">
+        <label for="numHosts" class="form-label">Number of Hosts:</label>
+        <input type="number" name="numHosts" class="form-control" id="numHosts" min="1" required />
+      </div>
+    </div>
+
+    <!-- Dynamic Configurations -->
+    <h3>Host Configuration</h3>
+    <div id="hostConfig" class="mb-4"></div>
+
+    <h3>Cloudlet Configuration</h3>
+    <div id="cloudletConfig" class="mb-4"></div>
+
+    <h3>VM Configuration</h3>
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <label for="vmMips" class="form-label">VM MIPS:</label>
+        <input type="number" name="vmMips" class="form-control" id="vmMips" min="1" required />
+      </div>
+
+      <div class="col-md-4">
+        <label for="vmPes" class="form-label">VM PEs:</label>
+        <input type="number" name="vmPes" class="form-control" id="vmPes" min="1" required />
+      </div>
+
+      <div class="col-md-4">
+        <label for="vmRam" class="form-label">VM RAM (MB):</label>
+        <input type="number" name="vmRam" class="form-control" id="vmRam" min="1" required />
+      </div>
+
+      <div class="col-md-4">
+        <label for="vmBw" class="form-label">VM Bandwidth (Mbps):</label>
+        <input type="number" name="vmBw" class="form-control" id="vmBw" min="1" required />
+      </div>
+
+      <div class="col-md-4">
+        <label for="vmSize" class="form-label">VM Size (MB):</label>
+        <input type="number" name="vmSize" class="form-control" id="vmSize" min="1" required />
+      </div>
+    </div>
+
+    <h3>Algorithm</h3>
+    <div class="mb-4">
+      <select name="algorithm" class="form-select" id="algorithm" required>
+        <option value="roundrobin">Round Robin</option>
+        <option value="fcfs">FCFS</option>
+        <option value="aco">Ant Colony Optimization</option>
+        <option value="genetic">Genetic Algorithm</option>
+        <option value="sjf">Shortest Job First</option>
+      </select>
+    </div>
+
+    <!-- Buttons Section -->
+    <div class="mt-4">
+      <button type="submit" class="btn btn-primary me-2">Simulate</button>
+      <button type="button" class="btn btn-secondary me-2" onclick="setDefaultValues()">Set Default Values</button>
+      <button type="button" class="btn btn-danger" onclick="clearForm()">Clear</button>
+    </div>
+  </form>
+
+  <!-- JavaScript Section -->
+  <script>
+    function generateHostConfig() {
+      const hostConfigDiv = document.getElementById("hostConfig");
+      const numHosts = parseInt(document.getElementById("numHosts").value) || 0;
+      hostConfigDiv.innerHTML = "";
+
+      for (let i = 0; i < numHosts; i++) {
+        hostConfigDiv.innerHTML += `
+          <fieldset class="border p-3 mt-3">
+            <legend>Host ${i + 1}</legend>
+            <label>PE MIPS (Comma separated values):</label>
+            <input type="text" name="hosts${i}_pesMips" class="form-control" required placeholder="e.g., 3000,3000">
+            <label>RAM (MB):</label>
+            <input type="number" name="hosts${i}_ram" class="form-control" min="1" required>
+            <label>Bandwidth (Mbps):</label>
+            <input type="number" name="hosts${i}_bw" class="form-control" min="1" required>
+            <label>Storage (MB):</label>
+            <input type="number" name="hosts${i}_storage" class="form-control" min="1" required>
+          </fieldset>
+        `;
+      }
+    }
+
+    function generateCloudletConfig() {
+      const cloudletConfigDiv = document.getElementById("cloudletConfig");
+      const numCloudlets = parseInt(document.getElementById("numCloudlets").value) || 0;
+      cloudletConfigDiv.innerHTML = "";
+
+      for (let i = 0; i < numCloudlets; i++) {
+        cloudletConfigDiv.innerHTML += `
+          <fieldset class="border p-3 mt-3">
+            <legend>Cloudlet ${i + 1}</legend>
+            <label>Length:</label>
+            <input type="number" name="cloudlet${i}_length" class="form-control" min="1" required>
+            <label>Number of Cores:</label>
+            <input type="number" name="cloudlet${i}_pes" class="form-control" min="1" required>
+            <label>File Size (MB):</label>
+            <input type="number" name="cloudlet${i}_fileSize" class="form-control" min="1" required>
+            <label>Output Size (MB):</label>
+            <input type="number" name="cloudlet${i}_outputSize" class="form-control" min="1" required>
+          </fieldset>
+        `;
+      }
+    }
+
+    function setDefaultValues() {
+      document.getElementById('numVMs').value = 3;
+      document.getElementById('numCloudlets').value = 5;
+      document.getElementById('numHosts').value = 2;
+      document.getElementById('vmPes').value = 2;
+      generateHostConfig();
+      generateCloudletConfig();
+
+      const hostDefaults = [
+        { mips: "3000,3000", ram: 8192, bw: 20000, storage: 100000 },
+        { mips: "4000,4000", ram: 16384, bw: 40000, storage: 200000 }
+      ];
+      
+      hostDefaults.forEach((host, i) => {
+        document.querySelector(`input[name="hosts${i}_pesMips"]`).value = host.mips;
+        document.querySelector(`input[name="hosts${i}_ram"]`).value = host.ram;
+        document.querySelector(`input[name="hosts${i}_bw"]`).value = host.bw;
+        document.querySelector(`input[name="hosts${i}_storage"]`).value = host.storage;
+      });
+
+      for (let i = 0; i < 5; i++) {
+        document.querySelector(`input[name="cloudlet${i}_length"]`).value = 100000 + (i * 100000);
+        document.querySelector(`input[name="cloudlet${i}_pes"]`).value = 1;
+        document.querySelector(`input[name="cloudlet${i}_fileSize"]`).value = 5000;
+        document.querySelector(`input[name="cloudlet${i}_outputSize"]`).value = 1000;
+      }
+
+      document.getElementById('vmMips').value = 3000;
+      document.getElementById('vmRam').value = 4096;
+      document.getElementById('vmBw').value = 5000;
+      document.getElementById('vmSize').value = 20000;
+    }
+
+    function clearForm() {
+      document.getElementById('simulationForm').reset();
+      document.getElementById('hostConfig').innerHTML = '';
+      document.getElementById('cloudletConfig').innerHTML = '';
+    }
+
+    document.getElementById('numHosts').addEventListener('input', generateHostConfig);
+    document.getElementById('numCloudlets').addEventListener('input', generateCloudletConfig);
+  </script>
+</body>
+
+</html>
