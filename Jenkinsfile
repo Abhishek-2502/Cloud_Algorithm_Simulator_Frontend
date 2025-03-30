@@ -5,17 +5,29 @@ pipeline {
         DOCKER_IMAGE = 'flask-cloudsim-app'
         DOCKER_TAG = 'latest'
         CONTAINER_NAME = 'flask-cloudsim-container'
+        SSH_CREDENTIALS_ID = 'cloudsim-frontend-slave' // Use the ID of the SSH credential
     }
 
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
+                script {
+                    echo 'Checking out code using SSH with private repo access...'
+                    checkout([
+                        $class: 'GitSCM',
+                        branches: [[name: '*/main']],
+                        userRemoteConfigs: [[
+                            url: 'git@github.com:YourUsername/YourPrivateRepo.git', // Use SSH URL
+                            credentialsId: "${SSH_CREDENTIALS_ID}"
+                        ]]
+                    ])
+                }
             }
         }
 
         stage('Build Docker Image') {
             steps {
+                echo 'Building Docker Image...'
                 sh "docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} ."
             }
         }
