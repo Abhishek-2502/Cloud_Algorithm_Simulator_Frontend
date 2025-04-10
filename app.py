@@ -123,7 +123,7 @@ def simulate():
         }
 
         logging.info("Sending request to Spring Boot API")
-        response = requests.post('http://3.110.43.207:8080/api/simulation/run', json=data)
+        response = requests.post('http://13.234.125.14:8080/api/simulation/run', json=data)
 
         if response.status_code != 200:
             logging.error(f"Spring Boot API Error: {response.status_code} - {response.text}")
