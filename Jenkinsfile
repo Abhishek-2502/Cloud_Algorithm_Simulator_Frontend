@@ -5,23 +5,13 @@ pipeline {
         DOCKER_IMAGE = 'flask-cloudsim-app'
         DOCKER_TAG = 'latest'
         CONTAINER_NAME = 'flask-cloudsim-container'
-        SSH_CREDENTIALS_ID = 'cloudsim-frontend-slave' // This should match Jenkins credentials ID
     }
 
     stages {
         stage('Checkout') {
             steps {
-                script {
-                    echo 'Checking out code using SSH...'
-                    checkout([
-                        $class: 'GitSCM',
-                        branches: [[name: 'main']],
-                        userRemoteConfigs: [[
-                            url: 'git@github.com:Abhishek-2502/Cloud_Algorithm_Simulator_Frontend.git',
-                            credentialsId: "${SSH_CREDENTIALS_ID}"
-                        ]]
-                    ])
-                }
+                echo 'Checking out code using preconfigured SCM...'
+                checkout scm
             }
         }
 
