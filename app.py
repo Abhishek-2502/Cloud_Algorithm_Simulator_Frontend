@@ -82,9 +82,9 @@ def simulate():
 
         # Algorithm Selection
         algorithm = request.form.get('algorithm', '').strip().lower()
-        if algorithm not in ['roundrobin', 'fcfs', 'sjf', 'aco', 'genetic']:
+        if algorithm not in ['roundrobin', 'fcfs', 'sjf', 'ant', 'genetic']:
             logging.error(f"Invalid algorithm selected: {algorithm}")
-            return f"Error: Invalid algorithm '{algorithm}'. Choose from roundrobin, fcfs, sjf, aco, or genetic."
+            return f"Error: Invalid algorithm '{algorithm}'. Choose from roundrobin, fcfs, sjf, ant, or genetic."
         logging.info(f"Selected Algorithm: {algorithm}")
 
         # Cloudlet Configuration
